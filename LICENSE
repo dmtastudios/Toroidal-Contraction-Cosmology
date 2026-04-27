@@ -1,21 +1,46 @@
-MIT License
+DMTA STUDIOS, LLC PROPRIETARY SOFTWARE LICENSE AGREEMENT
+EFFECTIVE DATE: April 18, 2026
+LICENSOR: DMTA Studios, LLC ("Licensor")
+SOFTWARE: SempreChain ("Software")
 
-Copyright (c) 2026 David Williams
+IMPORTANT – READ CAREFULLY: This Proprietary Software License Agreement ("Agreement") is a legal agreement between you (either an individual or a legal entity, hereinafter "Licensee") and DMTA Studios, LLC. By downloading, installing, accessing, or otherwise using SempreChain, you agree to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, do not install, access, or use the Software.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. GRANT OF LICENSE
+Subject to the terms and conditions of this Agreement, DMTA Studios, LLC grants to Licensee a limited, non-exclusive, non-transferable, and revocable license to use the Software solely for Licensee's personal or internal business purposes.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. RESTRICTIONS
+Licensee shall not, directly or indirectly, and shall not permit any third party to:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copy, reproduce, modify, or create derivative works of the Software.
+
+Distribute, sell, lease, rent, lend, sublicense, or otherwise transfer the Software to any third party.
+
+Reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code, underlying ideas, algorithms, or cryptography of the Software, except to the extent expressly permitted by applicable law.
+
+Use the Software for any illegal, fraudulent, or unauthorized purpose.
+
+Remove, alter, or obscure any proprietary notices, labels, or marks from the Software.
+
+3. OWNERSHIP AND INTELLECTUAL PROPERTY
+SempreChain is licensed, not sold. DMTA Studios, LLC and its suppliers retain all right, title, and interest in and to the Software, including all copyrights, patents, trade secrets, trademarks, and other intellectual property rights therein. This Agreement grants Licensee no rights to use the DMTA Studios, LLC or SempreChain trademarks, service marks, or logos.
+
+4. DATA AND BLOCKCHAIN NETWORK USAGE
+If the Software interacts with a decentralized network or ledger hosted or managed by DMTA Studios, LLC:
+
+Licensor does not guarantee the continuous availability, security, or immutability of the network.
+
+Licensee acknowledges that cryptographic and blockchain technologies are subject to inherent risks, including but not limited to regulatory changes, network vulnerabilities, and loss of private keys. DMTA Studios, LLC is not responsible for any lost assets or data resulting from these risks.
+
+5. DISCLAIMER OF WARRANTIES
+THE SOFTWARE IS PROVIDED TO LICENSEE "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, DMTA STUDIOS, LLC DISCLAIMS ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. DMTA STUDIOS, LLC DOES NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE, SECURE, OR UNINTERRUPTED.
+
+6. LIMITATION OF LIABILITY
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL DMTA STUDIOS, LLC, ITS DIRECTORS, EMPLOYEES, OR AFFILIATES BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, CONSEQUENTIAL, OR PUNITIVE DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, LOSS OF DIGITAL ASSETS OR TOKENS, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF DMTA STUDIOS, LLC HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+7. TERMINATION
+This Agreement is effective until terminated. DMTA Studios, LLC may terminate this Agreement at any time, with or without cause, immediately upon notice to Licensee. Licensee may terminate this Agreement by ceasing all use of the Software and destroying all copies. Upon termination, the license granted herein will immediately cease, and Licensee must destroy all copies of the Software in their possession or control. Sections 2, 3, 5, 6, and 8 shall survive any termination of this Agreement.
+
+8. GOVERNING LAW AND JURISDICTION
+This Agreement shall be governed by and construed in accordance with the laws of the State of [Insert State, e.g., Delaware or your state of incorporation], without regard to its conflict of law principles. Any legal action or proceeding arising under this Agreement will be brought exclusively in the federal or state courts located in [Insert County/State], and the parties hereby consent to personal jurisdiction and venue therein.
+
+BY USING THE SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT, UNDERSTAND IT, AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.
