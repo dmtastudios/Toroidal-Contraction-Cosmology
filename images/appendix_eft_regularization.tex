@@ -1,0 +1,364 @@
+\documentclass[12pt,openany]{book}
+
+% ---------------------------------------------------------
+% Encoding and Fonts
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\setlength{\intextsep}{12pt}
+
+% ---------------------------------------------------------
+% Mathematics Packages
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{amsthm}
+\usepackage{physics}
+
+% ---------------------------------------------------------
+% Graphics, Color, TikZ
+% ---------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\graphicspath{{./images/}}
+
+% ---------------------------------------------------------
+% Layout and Formatting
+% ---------------------------------------------------------
+\usepackage{geometry}
+\geometry{
+    top=1in,
+    bottom=1in,
+    left=1.25in,
+    right=1.25in,
+    headheight=15pt
+}
+
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{tabularx}
+
+% ---------------------------------------------------------
+% Hyperlinks
+% ---------------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Torus-Time and Closed-Loop Topology},
+    pdfauthor={David Ohmer Williams, II}
+}
+
+% ---------------------------------------------------------
+% Header/Footer Style
+% ---------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------------------------------------------------------
+% Title Formatting
+% ---------------------------------------------------------
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+% ---------------------------------------------------------
+% Custom Macros (Unicode-Free)
+% ---------------------------------------------------------
+\newcommand{\SingOp}{\bigcirc}
+\newcommand{\Sinfo}{S_{\text{info}}}
+\newcommand{\goldenratio}{1.618}
+
+% ---------------------------------------------------------
+% Theorem Environments
+% ---------------------------------------------------------
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{definition}{Definition}[chapter]
+
+% ---------------------------------------------------------
+% Title Information
+% ---------------------------------------------------------
+\title{
+    \Huge \textbf{Torus-Time and Closed-Loop Topology} \\
+    \vspace{0.5cm}
+    \LARGE Volume I: The Mathematics of Dynamic Iteration \\
+    \vspace{0.5cm}
+    \large A Unified Framework for Mathematics, Physics, and the Toroidal Contraction Cosmology
+}
+
+\author{\Large \textbf{David Ohmer Williams, II}}
+\date{\large March 2026}
+
+
+\begin{document}
+
+\frontmatter
+
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[inner sep=0pt] at (current page.center) {
+        \includegraphics[width=\paperwidth, height=\paperheight]{book_cover.jpg}
+        };
+     \node[yshift=5cm] at (current page.center) {
+            \color{white} 
+            \begin{tabular}{c}
+                \Huge \textbf{Appendix EFT Regularization} \\
+                \vspace{0.5cm} \\
+              	\Large Torus-Time and Closed-Loop Topology, Volume I \\
+                \vspace{2cm} \\
+                \Large \textbf{David Ohmer Williams, II}
+            \end{tabular}
+        };
+    \end{tikzpicture}
+\end{titlepage}
+
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{center}
+    \textcopyright\ \the\year\ DMTA Studios, LLC. \\
+    All rights reserved.
+\end{center}
+
+\vspace{1cm}
+
+No part of this publication may be reproduced, distributed, or transmitted 
+in any form or by any means, including photocopying, recording, or other 
+electronic or mechanical methods, without the prior written permission of 
+the author, except in the case of brief quotations embodied in critical 
+reviews and certain other noncommercial uses permitted by copyright law.
+
+\vspace{1cm}
+
+For permissions, contact: \\
+\texttt{david.williams@dmtastudios.com}
+\providecommand{\Ltcc}{\Lambda_{\mathrm{TCC}}}
+\providecommand{\Dtens}{\mathcal{D}}
+\providecommand{\kcog}{\kappa_{\mathrm{cog}}}
+\providecommand{\Nmax}{N_{\max}}
+\providecommand{\Mpl}{M_{\mathrm{P}}}
+\providecommand{\lpl}{\ell_{\mathrm{P}}}
+\providecommand{\vev}[1]{\langle #1 \rangle}
+\providecommand{\abs}[1]{\lvert #1 \rvert}
+\providecommand{\norm}[1]{\lVert #1 \rVert}
+\providecommand{\order}[1]{\mathcal{O}\!\left(#1\right)}
+\providecommand{\Ren}{\mathrm{ren}}
+\providecommand{\EFT}{\mathrm{EFT}}
+\providecommand{\diss}{\mathrm{diss}}
+\providecommand{\SoneR}{S^{1}_{T}\!\times\!\mathbb{R}^{3}}
+
+%% --- Theorem environments (skip if already defined) ---
+\newtheorem{theoremA}{Theorem}[chapter]
+\newtheorem{lemmaA}[theoremA]{Lemma}
+\newtheorem{propositionA}[theoremA]{Proposition}
+\newtheorem{conjectureA}[theoremA]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definitionA}[theoremA]{Definition}
+\newtheorem{hypothesisA}[theoremA]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remarkA}[theoremA]{Remark}
+\newtheorem{openprobA}[theoremA]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{EFT Regularization and Chronology Protection in Toroidal Time}
+\label{app:EFT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===================================================================
+\section*{Executive Summary}
+\addcontentsline{toc}{section}{Executive Summary}
+\label{sec:exec-summary}
+%===================================================================
+
+This appendix establishes a controlled Effective Field Theory (EFT) framework
+for quantum fields on the torus-time manifold $\SoneR$ and addresses the
+chronology-protection vulnerability of the compactified temporal direction.
+The principal results are:
+
+\begin{enumerate}
+  \item \textbf{Blue-shift instability (Theorem~\ref{thm:blueshift}).}
+    Without regulation, the formal vacuum stress--energy tensor on
+    $\SoneR$ diverges due to unbounded accumulation of high-winding
+    temporal modes, irrespective of standard UV renormalization.
+  \item \textbf{Dissonance suppression (Theorem~\ref{thm:diss-supp}).}
+    Under Hypotheses~\ref{hyp:primordial}--\ref{hyp:diss-props},
+    the Dissonance Tensor $\Dtens_{\mu\nu}$ provides topological friction
+    that exponentially suppresses modes with
+    $\abs{\omega_n}\gtrsim\Ltcc$.
+  \item \textbf{Parametric control (Theorem~\ref{thm:param-control}).}
+    With the combined hard cutoff at $\Ltcc$ and dissonance regulation,
+    the renormalized stress--energy satisfies
+    
+
+\[
+      \abs{\vev{T_{\mu\nu}}_{\Ren}} \;\lesssim\;
+        \Ltcc^{4}\;\exp\!\bigl(-\kcog\, T\,\Ltcc\bigr),
+    \]
+
+
+    which is parametrically small when $\kcog\,T\,\Ltcc \gg 1$.
+  \item \textbf{Period bounds (Proposition~\ref{prop:T-bounds}).}
+    Consistency of the EFT with negligible gravitational backreaction
+    requires
+    $\lpl \ll T^{-1} \ll \Ltcc \ll \Mpl$
+    and constrains the torus period to
+    $T \lesssim \Mpl / \Ltcc^{2}$.
+  \item \textbf{Cosmological connection.}
+    Setting $T\sim H_{0}^{-1}$ (Hubble time) yields
+    $\Ltcc \sim (\Mpl H_{0})^{1/2} \sim 10^{-3}\;\mathrm{eV}$,
+    a scale intriguingly close to the dark-energy scale $\rho_{\Lambda}^{1/4}$.
+\end{enumerate}
+
+\noindent\textbf{Remaining risks.}
+The dissonance-suppression mechanism is postulated (Conjecture~\ref{conj:diss-origin}),
+not derived from first principles.
+Non-perturbative instanton contributions on $S^{1}_{T}$ are estimated but
+not rigorously bounded (Open Problem~\ref{op:instantons}).
+The extension to interacting gauge theories is perturbative only
+(\S\ref{sec:interactions}).
+
+
+%===================================================================
+\section{Assumptions and Energy Scales}
+\label{sec:assumptions}
+%===================================================================
+
+%-------------------------------------------------------------------
+\subsection{The Compactified Temporal Manifold}
+\label{sec:manifold}
+%-------------------------------------------------------------------
+
+\begin{hypothesisA}[Primordial Chronology]
+\label{hyp:primordial}
+The spacetime manifold is
+$(\mathcal{M},g) = (\SoneR,\,\eta)$
+with flat Lorentzian metric
+\begin{equation}\label{eq:metric}
+  ds^{2} \;=\; -dt^{2} + d\mathbf{x}^{2},
+  \qquad t \sim t + T,\quad T>0.
+\end{equation}
+The temporal identification is a \emph{primordial topological} feature
+of $\mathcal{M}$, not the dynamical product of a causality-violating
+process in an initially globally hyperbolic spacetime.
+\end{hypothesisA}
+
+\begin{remarkA}
+Hypothesis~\ref{hyp:primordial} distinguishes the present framework from
+the scenarios addressed by Hawking's chronology-protection conjecture
+\cite{Hawking1992}, which concerns the \emph{dynamical formation} of
+closed timelike curves (CTCs) and the divergence of
+$\vev{T_{\mu\nu}}$ on the resulting Cauchy horizon.
+Here there is no Cauchy horizon: the entire manifold possesses CTCs
+of period $T$.
+The question is not whether CTCs \emph{form}, but whether quantum
+backreaction on a manifold that \emph{already has them} is controllable.
+\end{remarkA}
+
+%-------------------------------------------------------------------
+\subsection{The TCC Cutoff Scale}
+\label{sec:cutoff}
+%-------------------------------------------------------------------
+
+\begin{definitionA}[Trans-Planckian Censorship Cutoff]
+\label{def:Ltcc}
+The cutoff $\Ltcc$ is the maximum energy at which the EFT on
+$\SoneR$ is taken to be valid.  It satisfies:
+\begin{enumerate}
+  \item[(C1)] $\Ltcc \ll \Mpl$\quad
+    (sub-Planckian; quantum-gravity corrections negligible);
+  \item[(C2)] $\Ltcc \gg T^{-1}$\quad
+    (many modes below cutoff; the EFT has a rich discrete spectrum);
+  \item[(C3)] The maximal winding number retained in the mode sum is
+    \begin{equation}\label{eq:Nmax}
+      \Nmax \;=\;
+        \left\lfloor \frac{\Ltcc \, T}{2\pi} \right\rfloor \;\gg\; 1.
+    \end{equation}
+\end{enumerate}
+\end{definitionA}
+
+\noindent\textbf{Physical interpretation.}
+The TCC of Bedroya \& Vafa \cite{BedroyaVafa2019} asserts that
+sub-Planckian fluctuations must never freeze out at super-Hubble scales.
+Transposed to torus-time, $\Ltcc$ demarcates the boundary above which
+temporal modes would probe trans-Planckian winding and violate the
+censorship principle.
+Modes with $\abs{\omega_{n}}>\Ltcc$ are \emph{censored}: they are
+excluded from the EFT spectrum and assumed to decouple.
+
+%-------------------------------------------------------------------
+\subsection{Hierarchy of Scales}
+\label{sec:hierarchy}
+%-------------------------------------------------------------------
+
+The EFT is self-consistent when
+\begin{equation}\label{eq:hierarchy}
+  \underbrace{T^{-1}}_{\text{IR, winding gap}}
+  \;\ll\;
+  \underbrace{m,\; H_{0}}_{\text{particle masses,\;Hubble}}
+  \;\ll\;
+  \underbrace{\Ltcc}_{\text{EFT cutoff}}
+  \;\ll\;
+  \underbrace{\Mpl}_{\text{Planck}}.
+\end{equation}
+The second inequality ensures that the lightest dynamical scales
+lie well within the EFT band.
+
+%===================================================================
+\section{Blue-Shift Instability on \texorpdfstring{$\SoneR$}{S1×R3}}
+\label{sec:blueshift}
+%===================================================================
+
+%-------------------------------------------------------------------
+\subsection{Mode Decomposition}
+\label{sec:modes}
+%-------------------------------------------------------------------
+
+A real scalar field $\phi$ of mass $m$ on $\SoneR$ satisfying periodic
+boundary conditions admits the Fourier decomposition
+\begin{equation}\label{eq:mode-exp}
+  \phi(t,\mathbf{x})
+  \;=\;
+  \frac{1}{\sqrt{T}}\sum_{n\in\mathbb{Z}}
+  \int\!\frac{d^{3}k}{(2\pi)^{3}}\;
+  \hat{\phi}_{n}(\mathbf{k})\;
+  e^{i\omega_{n}t + i\mathbf{k}\cdot\mathbf{x}},
+  \qquad
+  \omega_{n}=\frac{2\pi n}{T}.
+\end{equation}
+The Klein--Gordon equation $(\Box+m^{2})\phi=0$ on each mode gives
+\begin{equation}\label{eq:dispersion}
+  \bigl(-\omega_{n}^{2}+\abs{\mathbf{k}}^{2}+m^{2}\bigr)\,
+  \hat{\phi}_{n}(\mathbf{k}) = 0.
+\end{equation}
+
+\noindent
+For \emph{off-shell} vacuum fluctuations (which determine the
+stress--energy), all $(n,\mathbf{k})$ contribute.  The on-shell
+condition $\abs{\mathbf{k}}^{2}=\omega_{n}^{2}-m^{2}$ selects
+propagating modes when $\abs{\omega_{n}}>m$.
+
+%-------------------------------------------------------------------
+\subsection{The Unregulated Stress--Energy Divergence}
+\label{sec:divergence}
+%-------------------------------------------------------------------
+
+Passing to Euclidean signature $t\to -i\tau$,\;$\tau\sim\tau+T$
+(cf.\ \cite{BirrelDavies1982}, Ch.~6), the formal vacuum energy density
+is
+\begin{equation}\label{eq:rho-formal}
+  \rho_{\mathrm{formal}}
+  \;=\;
+  \frac{1}{2T}\sum_{n\in\mathbb{Z}}
+  \int\!\frac{d^{3}k}{(2\pi)^{3}}\;
+  \bigl(\omega_{n}^{2}
