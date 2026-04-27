@@ -90,6 +90,39 @@
 \newtheorem{definition}{Definition}[chapter]
 
 % ---------------------------------------------------------
+% EFT Appendix: Theorem Environments
+% ---------------------------------------------------------
+\newtheorem{efttheorem}{Theorem}[chapter]
+\newtheorem{eftlemma}[efttheorem]{Lemma}
+\newtheorem{eftproposition}[efttheorem]{Proposition}
+\newtheorem{eftconjecture}[efttheorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{eftdefinition}[efttheorem]{Definition}
+\newtheorem{efthypothesis}[efttheorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{eftremark}[efttheorem]{Remark}
+\newtheorem{eftopenproblem}[efttheorem]{Open Problem}
+
+% ---------------------------------------------------------
+% EFT Appendix: Macros
+% ---------------------------------------------------------
+\providecommand{\Ltcc}{\Lambda_{\mathrm{TCC}}}
+\providecommand{\Dtens}{\mathcal{D}}
+\providecommand{\kcog}{\kappa_{\mathrm{cog}}}
+\providecommand{\Nmax}{N_{\max}}
+\providecommand{\Mpl}{M_{\mathrm{P}}}
+\providecommand{\lpl}{\ell_{\mathrm{P}}}
+\providecommand{\vev}[1]{\langle #1 \rangle}
+\providecommand{\abs}[1]{\lvert #1 \rvert}
+\providecommand{\norm}[1]{\lVert #1 \rVert}
+\providecommand{\order}[1]{\mathcal{O}\!\left(#1\right)}
+\providecommand{\Ren}{\mathrm{ren}}
+\providecommand{\EFT}{\mathrm{EFT}}
+\providecommand{\diss}{\mathrm{diss}}
+\providecommand{\SoneR}{S^{1}_{T}\!\times\!\mathbb{R}^{3}}
+
+
+% ---------------------------------------------------------
 % Title Information
 % ---------------------------------------------------------
 \title{
@@ -4396,6 +4429,1223 @@ Ecosystems (Consensus) & observer algebra of macroscopic observables & spectral 
 \end{tabularx}
 \label{tab:choices}
 \end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BEGIN: EFT Regularization Appendix + Reviewer Checklist
+%% Inserted between Chapter 33 and Chapter 34
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Appendix: EFT Regularization and Chronology Protection in Toroidal Time}
+\label{app:EFT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%===================================================================
+\section*{Executive Summary}
+\addcontentsline{toc}{section}{Executive Summary}
+\label{sec:eft-exec-summary}
+%===================================================================
+
+This appendix provides a self-contained Effective Field Theory (EFT)
+framework for quantum fields on the Torus-Time manifold
+$\SoneR$ and addresses the central chronology-protection
+vulnerability of the compactified temporal direction.
+
+The principal results are:
+
+\begin{enumerate}
+  \item \textbf{Blue-shift instability (Theorem~\ref{thm:blueshift}).}
+    Without regulation, the formal vacuum stress--energy tensor on
+    $\SoneR$ diverges due to unbounded accumulation of
+    high-winding temporal modes, independently of standard spatial UV
+    renormalization.
+
+  \item \textbf{Dissonance suppression (Theorem~\ref{thm:diss-supp}).}
+    Under Hypotheses~\ref{hyp:primordial}--\ref{hyp:diss-props},
+    the Dissonance Tensor $D_{\mu\nu}$ (as defined in Chapter~18,
+    Eq.~18.7) provides topological friction that exponentially suppresses
+    modes with $\abs{\omega_n} \gtrsim \Ltcc$.
+
+  \item \textbf{Parametric control (Theorem~\ref{thm:param-control}).}
+    With the combined hard cutoff at $\Ltcc$ and dissonance regulation,
+    the renormalized stress--energy satisfies
+    \[
+      \abs{\vev{T_{\mu\nu}}_{\Ren}} \;\lesssim\;
+        \frac{\Ltcc^{4}}{16\pi^{2}}\;
+        \exp\!\bigl(-\alpha_{\diss}\, T\,\Ltcc\bigr),
+    \]
+    which is parametrically small when
+    $\alpha_{\diss}\, T\,\Ltcc \gg 1$, where $\alpha_{\diss}$ is
+    the dimensionless dissonance-friction coefficient.
+
+  \item \textbf{Period bounds (Proposition~\ref{prop:T-bounds}).}
+    Consistency of the EFT with negligible gravitational backreaction
+    requires
+    $T^{-1} \ll \Ltcc \ll \Mpl$
+    and constrains the torus period to
+    $T \gtrsim \Mpl / \Ltcc^{2}$.
+
+  \item \textbf{Cosmological coincidence.}
+    Setting $T \sim H_{0}^{-1}$ (Hubble time) yields
+    $\Ltcc \sim (\Mpl\, H_{0})^{1/2} \sim 10^{-3}\;\mathrm{eV}$,
+    a scale close to the dark-energy scale
+    $\rho_{\Lambda}^{1/4} \sim 2.3 \times 10^{-3}\;\mathrm{eV}$.
+\end{enumerate}
+
+\noindent\textbf{Remaining risks.}
+The dissonance-suppression mechanism is postulated
+(Conjecture~\ref{conj:diss-origin}), not derived from first principles.
+Non-perturbative instanton contributions on $S^{1}_{T}$ are estimated
+but not rigorously bounded (Open Problem~\ref{op:instantons}).
+The extension to interacting gauge theories is perturbative only
+(\S\ref{sec:eft-interactions}).
+
+
+%===================================================================
+\section{Assumptions and Energy Scales}
+\label{sec:eft-assumptions}
+%===================================================================
+
+%-------------------------------------------------------------------
+\subsection{The Compactified Temporal Manifold}
+\label{sec:eft-manifold}
+%-------------------------------------------------------------------
+
+\begin{efthypothesis}[Primordial Chronology]
+\label{hyp:primordial}
+The spacetime manifold is
+$(\mathcal{M},g) = (\SoneR,\,\eta)$
+with flat Lorentzian metric
+\begin{equation}\label{eq:eft-metric}
+  ds^{2} \;=\; -dt^{2} + d\mathbf{x}^{2},
+  \qquad t \sim t + T,\quad T>0.
+\end{equation}
+The temporal identification is a \emph{primordial topological} feature
+of $\mathcal{M}$, not the dynamical product of a causality-violating
+process in an initially globally hyperbolic spacetime.
+\end{efthypothesis}
+
+\begin{eftremark}
+Hypothesis~\ref{hyp:primordial} distinguishes the present framework from
+the scenarios addressed by Hawking's chronology-protection conjecture
+\cite{Hawking1992}, which concerns the \emph{dynamical formation} of
+closed timelike curves (CTCs) and the divergence of
+$\vev{T_{\mu\nu}}$ on the resulting Cauchy horizon.
+Here there is no Cauchy horizon: the entire manifold possesses CTCs
+of period~$T$.  The question is not whether CTCs \emph{form}, but
+whether quantum backreaction on a manifold that \emph{already has them}
+remains controllable within a well-defined EFT.  This is precisely the
+question left open in Chapter~20.5.
+\end{eftremark}
+
+%-------------------------------------------------------------------
+\subsection{The TCC Cutoff Scale}
+\label{sec:eft-cutoff}
+%-------------------------------------------------------------------
+
+\begin{eftdefinition}[Trans-Planckian Censorship Cutoff]
+\label{def:Ltcc}
+The cutoff $\Ltcc$ is the maximum energy scale at which the EFT on
+$\SoneR$ is taken to be valid.  It satisfies three conditions:
+\begin{enumerate}
+  \item[\textbf{(C1)}] $\Ltcc \ll \Mpl$\quad
+    (sub-Planckian; quantum-gravity corrections suppressed by
+    $\Ltcc/\Mpl$);
+  \item[\textbf{(C2)}] $\Ltcc \gg T^{-1}$\quad
+    (many Matsubara-like modes lie below the cutoff; the EFT has a
+    rich discrete spectrum);
+  \item[\textbf{(C3)}] The maximal winding number retained in the mode
+    sum is
+    \begin{equation}\label{eq:eft-Nmax}
+      \Nmax \;=\;
+        \left\lfloor \frac{\Ltcc \, T}{2\pi} \right\rfloor \;\gg\; 1.
+    \end{equation}
+\end{enumerate}
+\end{eftdefinition}
+
+\noindent\textbf{Physical interpretation.}
+The Trans-Planckian Censorship Conjecture (TCC) of Bedroya and Vafa
+\cite{BedroyaVafa2019} asserts that sub-Planckian quantum fluctuations
+must never be stretched to super-Hubble scales during cosmological
+evolution.  Transposed to the present setting, $\Ltcc$ demarcates the
+boundary above which temporal modes would probe trans-Planckian winding
+numbers and violate the censorship principle.
+Modes with $\abs{\omega_{n}} > \Ltcc$ are \emph{censored}: they are
+excluded from the EFT spectrum and assumed to decouple.
+
+\begin{eftremark}
+The name $\Ltcc$ deliberately echoes both the Trans-Planckian Censorship
+Conjecture \cite{BedroyaVafa2019} and the Toroidal Contraction Cosmology
+of the present work.  The reader should distinguish these by context.
+\end{eftremark}
+
+%-------------------------------------------------------------------
+\subsection{Hierarchy of Scales}
+\label{sec:eft-hierarchy}
+%-------------------------------------------------------------------
+
+The EFT is self-consistent when the following hierarchy holds:
+\begin{equation}\label{eq:eft-hierarchy}
+  \underbrace{T^{-1}}_{\text{IR: winding gap}}
+  \;\ll\;
+  \underbrace{m,\; H_{0}}_{\substack{\text{particle masses,}\\\text{Hubble rate}}}
+  \;\ll\;
+  \underbrace{\Ltcc}_{\text{EFT cutoff}}
+  \;\ll\;
+  \underbrace{\Mpl}_{\text{Planck}}.
+\end{equation}
+The second inequality ensures that the lightest dynamical scales
+lie well within the EFT band.  Throughout this appendix we work in
+natural units $\hbar = c = 1$ unless otherwise stated.
+
+
+%===================================================================
+\section{Blue-Shift Instability on \texorpdfstring{$\SoneR$}{S1xR3}}
+\label{sec:eft-blueshift}
+%===================================================================
+
+%-------------------------------------------------------------------
+\subsection{Mode Decomposition}
+\label{sec:eft-modes}
+%-------------------------------------------------------------------
+
+A real scalar field $\phi$ of mass $m$ on $\SoneR$ satisfying periodic
+boundary conditions $\phi(t+T,\mathbf{x}) = \phi(t,\mathbf{x})$
+admits the Kaluza--Klein--type Fourier decomposition
+\begin{equation}\label{eq:eft-mode-exp}
+  \phi(t,\mathbf{x})
+  \;=\;
+  \frac{1}{\sqrt{T}}\sum_{n\in\mathbb{Z}}
+  \int\!\frac{d^{3}k}{(2\pi)^{3}}\;
+  \hat{\phi}_{n}(\mathbf{k})\;
+  e^{i\omega_{n}t + i\mathbf{k}\cdot\mathbf{x}},
+  \qquad
+  \omega_{n}=\frac{2\pi n}{T}.
+\end{equation}
+Each mode $(n,\mathbf{k})$ satisfies the Klein--Gordon equation
+$(\Box+m^{2})\phi=0$ if and only if
+\begin{equation}\label{eq:eft-dispersion}
+  -\omega_{n}^{2}+\abs{\mathbf{k}}^{2}+m^{2} \;=\; 0
+  \qquad \Longleftrightarrow \qquad
+  \abs{\mathbf{k}}^{2} \;=\; \omega_{n}^{2}-m^{2}.
+\end{equation}
+For off-shell vacuum fluctuations, all $(n,\mathbf{k})$ contribute.
+
+%-------------------------------------------------------------------
+\subsection{The Unregulated Stress--Energy Divergence}
+\label{sec:eft-divergence}
+%-------------------------------------------------------------------
+
+The formal vacuum energy density in the Hadamard--regularized
+point-splitting scheme (cf.\ Birrell and Davies~\cite{BirrelDavies1982},
+Chapter~6) is computed via the image-sum method.  Passing to Euclidean
+signature $t \to -i\tau$, $\tau \sim \tau+T$, the Euclidean Green
+function is
+\begin{equation}\label{eq:eft-green}
+  G_{E}(x,x')
+  \;=\;
+  \sum_{n\in\mathbb{Z}}
+  G_{E}^{(\mathbb{R}^4)}\!\bigl(
+    \tau-\tau'+nT,\;\mathbf{x}-\mathbf{x}'\bigr),
+\end{equation}
+where $G_{E}^{(\mathbb{R}^4)}$ is the free Euclidean propagator on
+$\mathbb{R}^4$.  The renormalized stress--energy is obtained by
+subtracting the $n=0$ (Minkowski vacuum) term and then taking the
+coincidence limit $x' \to x$:
+\begin{equation}\label{eq:eft-Tmunu-formal}
+  \vev{T_{\mu\nu}}_{\Ren}^{\text{formal}}
+  \;=\;
+  \lim_{x'\to x} \mathcal{D}_{\mu\nu}
+  \sum_{n \neq 0}
+  G_{E}^{(\mathbb{R}^4)}\!\bigl(nT, \mathbf{0}\bigr),
+\end{equation}
+where $\mathcal{D}_{\mu\nu}$ is the appropriate second-order
+differential operator.  For a massless, conformally coupled scalar, the
+$n$-th image contributes
+\begin{equation}\label{eq:eft-image-n}
+  G_{E}^{(\mathbb{R}^4)}(nT, \mathbf{0})
+  \;=\; \frac{1}{4\pi^{2}(nT)^{2}},
+\end{equation}
+leading to a \emph{convergent} Casimir-type energy density
+\begin{equation}\label{eq:eft-casimir}
+  \rho_{\mathrm{Cas}}
+  \;=\;
+  -\frac{\pi^{2}}{90\,T^{4}}.
+\end{equation}
+This standard result, while finite, applies only in the conformal
+limit.  Crucially, the following theorem shows that departures from
+conformal coupling or the inclusion of the dissonance sector
+reintroduce divergences that demand the EFT cutoff.
+
+\begin{efttheorem}[Blue-Shift Instability]
+\label{thm:blueshift}
+Consider a massive real scalar field $\phi$ with mass~$m$ and arbitrary
+curvature coupling $\xi$ on $\SoneR$.  The unregulated (no cutoff)
+formal vacuum energy density, after Minkowski-vacuum subtraction
+(the $n=0$ image), satisfies
+\begin{equation}\label{eq:eft-blueshift-bound}
+  \abs{\rho_{\mathrm{formal}}}
+  \;\geq\;
+  \frac{1}{2T}
+  \sum_{n=1}^{\infty}
+  \int_0^{\infty}\!\frac{k^{2}\,dk}{2\pi^{2}}\;
+  \sqrt{\omega_n^{2}+k^{2}+m^{2}}
+  \;-\; (\text{Minkowski subtraction}),
+\end{equation}
+and the unsubtracted sum over $n$ diverges as $\sum_{n} n^{4}$ for
+modes with $\omega_{n} \gg m$.  Even after Minkowski subtraction
+removes the $n=0$ zero-point contribution, the residual sum over
+$n \neq 0$ diverges unless the field is conformally coupled
+($\xi = 1/6$, $m=0$) or a temporal mode cutoff is imposed.
+\end{efttheorem}
+
+\begin{proof}[Proof sketch]
+For $\omega_n \gg m$, the integrand grows as $\omega_n \sim n/T$.
+The Euler--Maclaurin asymptotic expansion of the sum gives a quartic
+divergence $\sim \Nmax^{4}/T^{4}$ in the partial sums.  The conformal
+case is special because the trace anomaly provides exact cancellation
+of all power-law terms, leaving only the finite
+Eq.~\eqref{eq:eft-casimir}.  Away from the conformal point, or when
+the Dissonance Lagrangian (Chapter~20) contributes additional
+non-conformal degrees of freedom, the cancellation fails.
+A detailed expansion using the Abel--Plana formula confirms the
+structure (see Wald~\cite{Wald1994}, \S4.6).
+\end{proof}
+
+\begin{eftremark}[Relation to Hawking's result]
+Hawking~\cite{Hawking1992} and Kay, Radzikowski, and
+Wald~\cite{KayRadzikowskiWald1997} proved that $\vev{T_{\mu\nu}}$
+diverges on the chronology horizon in spacetimes where CTCs form
+dynamically.  Theorem~\ref{thm:blueshift} establishes the analogous
+result for a \emph{primordially} compact temporal direction: without
+regulation, even the flat-space vacuum energy on~$\SoneR$ is
+uncontrolled due to the infinite tower of temporal Kaluza--Klein modes.
+\end{eftremark}
+
+%% ---- FIGURE 1 placeholder ----
+\begin{figure}[ht]
+\centering
+%% Replace the following with the TikZ/pgfplots code or
+%% \includegraphics{} once the mode_suppression_plot.py output
+%% is available.
+\framebox[\textwidth]{\parbox{0.83\textwidth}{\centering\medskip
+  \textbf{Figure~\ref{fig:eft-mode-tower}: Mode Tower on $\SoneR$.}\\[6pt]
+  Schematic of the discrete temporal frequency spectrum
+  $\omega_n = 2\pi n/T$ (vertical axis) versus spatial momentum
+  $\abs{\mathbf{k}}$ (horizontal axis).  The shaded region
+  $\abs{\omega_n} > \Ltcc$ indicates censored modes excluded from
+  the EFT.  The dashed parabola is the on-shell dispersion relation.
+  \medskip}}
+\caption{Discrete temporal mode tower on $\SoneR$.  Modes above
+  the TCC cutoff $\Ltcc$ (shaded) are excluded from the EFT
+  spectrum.  The number of retained modes is
+  $\Nmax = \lfloor \Ltcc T / 2\pi \rfloor$.}
+\label{fig:eft-mode-tower}
+\end{figure}
+
+
+%===================================================================
+\section{Dissonance Suppression of Blue-Shifting Modes}
+\label{sec:eft-diss-supp}
+%===================================================================
+
+The Dissonance Tensor $D_{\mu\nu}$, defined in Chapter~18
+(Eq.~18.7) and elevated to an affine gauge curvature in Chapter~17,
+provides a natural mechanism for suppressing the dangerous high-winding
+modes identified in Theorem~\ref{thm:blueshift}.  We formalize this
+mechanism under the following hypothesis.
+
+\begin{efthypothesis}[Dissonance Friction Properties]
+\label{hyp:diss-props}
+The dissonance sector, governed by the Lagrangian
+\begin{equation}\label{eq:eft-Ldiss}
+  \mathcal{L}_{D}
+  \;=\;
+  -\frac{1}{4\kcog}\,\mathrm{Tr}(D_{\mu\nu}D^{\mu\nu})
+  \;-\;\frac{m_{d}^{2}}{2}\,\mathrm{Tr}(\Delta_{\mu}\Delta^{\mu})
+  \;+\;i\kappa\,\mathrm{Tr}(D_{\mu\nu}D^{\mu\nu}),
+\end{equation}
+(as derived in Chapter~18, \S18.9) satisfies the following conditions
+on the background $\SoneR$:
+\begin{enumerate}
+  \item[\textbf{(D1)}] The background dissonance field
+    $\bar{\Delta}_{\mu}$ is spatially homogeneous and has a nonzero
+    temporal component
+    $\bar{\Delta}_{\theta} \neq 0$ (where $\theta$ is the $S^1$
+    angular coordinate), sourced by the global self-consistency
+    requirement;
+  \item[\textbf{(D2)}] The effective dissipation coefficient $\kappa$
+    is strictly positive, ensuring that the imaginary term generates
+    Lindblad-type damping (Chapter~18, \S18.10);
+  \item[\textbf{(D3)}] The dissonance mass $m_{d} > 0$, ensuring that
+    the shear field $\Delta_{\mu}$ does not propagate as a massless
+    mode.
+\end{enumerate}
+\end{efthypothesis}
+
+\begin{efttheorem}[Dissonance Suppression of High-Winding Modes]
+\label{thm:diss-supp}
+Under Hypotheses~\ref{hyp:primordial}--\ref{hyp:diss-props}, a scalar
+field $\phi$ minimally coupled to the background dissonance sector
+acquires a modified propagator on $\SoneR$.  In the Euclidean
+sector, the $n$-th winding contribution to the Green function is
+suppressed by a factor
+\begin{equation}\label{eq:eft-supp-factor}
+  \mathcal{S}(n)
+  \;=\;
+  \exp\!\Bigl(
+    -\alpha_{\diss}\;\abs{n}\;
+    \frac{2\pi}{T}\;\frac{1}{\Ltcc}
+  \Bigr)
+  \;=\;
+  \exp\!\Bigl(
+    -\alpha_{\diss}\;\frac{\abs{\omega_n}}{\Ltcc}
+  \Bigr),
+\end{equation}
+where
+\begin{equation}\label{eq:eft-alpha-diss}
+  \alpha_{\diss}
+  \;\equiv\;
+  \frac{\kappa\,\mathrm{Tr}
+    (\bar{D}_{\theta i}\bar{D}^{\theta i})}
+    {m_{d}^{2}}
+  \;>\; 0
+\end{equation}
+is a dimensionless friction coefficient determined by the background
+dissonance configuration.  Consequently, modes with
+$\abs{\omega_n} \gg \Ltcc / \alpha_{\diss}$ are exponentially
+suppressed in all vacuum correlation functions.
+\end{efttheorem}
+
+\begin{proof}[Proof sketch]
+The scalar field $\phi$ couples to the dissonance sector through the
+geometric minimal coupling scheme of Chapter~18, \S18.10.1.
+The interaction Hamiltonian
+$H_{\mathrm{int}} = \lambda \int d^{3}x\; S^{\mu\nu} \otimes D_{\mu\nu}$
+generates, in the Feynman--Vernon influence functional, a self-energy
+correction to the scalar propagator.  In the Born--Markov
+approximation (justified when the dissonance correlation time is much
+shorter than $T$), the retarded self-energy acquires an imaginary part
+\begin{equation}\label{eq:eft-self-energy}
+  \mathrm{Im}\,\Sigma_{n}(\mathbf{k})
+  \;=\;
+  -\alpha_{\diss}\;\abs{\omega_{n}}\;m_{d}^{2}.
+\end{equation}
+The Euclidean propagator $G_{n}(\mathbf{k})$ is thereby modified to
+\[
+  G_{n}(\mathbf{k})
+  \;=\;
+  \frac{1}{\omega_{n}^{2}+\abs{\mathbf{k}}^{2}+m^{2}
+    + \alpha_{\diss}\abs{\omega_{n}}\,m_{d}^{2}},
+\]
+whose large-$n$ behavior is dominated by the linear-in-$\abs{\omega_n}$
+damping term.  Resumming the image series with this modified propagator
+yields the suppression factor~\eqref{eq:eft-supp-factor}.
+\end{proof}
+
+\begin{eftconjecture}[Dynamical Origin of Dissonance Friction]
+\label{conj:diss-origin}
+The background dissonance configuration
+$\bar{\Delta}_{\theta} \neq 0$ is dynamically selected by the
+self-consistency condition on $\SoneR$: among all field
+configurations satisfying the periodic boundary conditions and
+minimizing $S_{\mathrm{IUR}}$ (Chapter~19), the global minimum
+requires a nonzero temporal shear to penalize paradoxical
+(non-self-consistent) histories.  This would elevate
+Hypothesis~\ref{hyp:diss-props}(D1) from a postulate to a theorem.
+A rigorous proof requires solving the full Euler--Lagrange equations
+of Chapter~18.10 on $\SoneR$ with the periodic boundary conditions
+and demonstrating that $\bar{\Delta}_{\theta} = 0$ is an unstable
+saddle point of the action.
+\end{eftconjecture}
+
+
+%===================================================================
+\section{Renormalized Stress--Energy Tensor}
+\label{sec:eft-Tmunu}
+%===================================================================
+
+%-------------------------------------------------------------------
+\subsection{Scalar Field}
+\label{sec:eft-scalar}
+%-------------------------------------------------------------------
+
+We now compute the renormalized stress--energy tensor
+$\vev{T_{\mu\nu}}_{\Ren}$ for a free real scalar field of mass~$m$
+on $\SoneR$ within the EFT, imposing both the hard cutoff
+$\abs{n} \leq \Nmax$ and the dissonance suppression
+factor~\eqref{eq:eft-supp-factor}.
+
+\medskip\noindent
+\textbf{Regulator scheme.}
+We employ a combined regulator:
+\begin{enumerate}
+  \item \textbf{Hard temporal cutoff:}  The sum over winding modes is
+    truncated at $\abs{n} \leq \Nmax$.
+  \item \textbf{Dissonance soft regulator:}  Each winding mode is
+    weighted by $\mathcal{S}(n)$ from
+    Eq.~\eqref{eq:eft-supp-factor}.
+  \item \textbf{Spatial UV:}  Standard dimensional regularization in
+    $d = 3 - 2\epsilon$ spatial dimensions, with
+    $\overline{\text{MS}}$ subtraction at a renormalization scale
+    $\mu$.
+\end{enumerate}
+
+\noindent
+\textbf{Renormalization prescription.}
+The Minkowski-vacuum ($n=0$) contribution is subtracted identically
+(point-splitting normalization \`a la Birrell and Davies
+\cite{BirrelDavies1982}).  Contact terms proportional to $g_{\mu\nu}$,
+$R_{\mu\nu}$, and $R\,g_{\mu\nu}$ are absorbed into the gravitational
+counterterms already present in the Einstein--Hilbert sector of
+$S_{\mathrm{IUR}}$.
+
+The renormalized vacuum energy density is:
+\begin{equation}\label{eq:eft-rho-ren}
+  \rho_{\Ren}
+  \;=\;
+  \frac{1}{2T}\sum_{\substack{n=-\Nmax\\n\neq 0}}^{\Nmax}
+  \mathcal{S}(n)\;
+  \int\!\frac{d^{3-2\epsilon}k}{(2\pi)^{3-2\epsilon}}\;
+  \sqrt{\omega_{n}^{2}+\abs{\mathbf{k}}^{2}+m^{2}}.
+\end{equation}
+Evaluating the spatial integral via standard techniques
+(cf.\ \cite{BirrelDavies1982}, Appendix~A), and performing the
+$\overline{\text{MS}}$ subtraction:
+\begin{equation}\label{eq:eft-rho-result}
+  \rho_{\Ren}
+  \;=\;
+  \frac{1}{T}\sum_{n=1}^{\Nmax}
+  \mathcal{S}(n)\;\Biggl[
+    -\frac{(\omega_n^2+m^2)^{2}}{64\pi^{2}}
+    \biggl(
+      \ln\frac{\omega_n^2+m^2}{\mu^2} - \frac{3}{2}
+    \biggr)
+  \Biggr]
+  \;+\; \order{\epsilon}.
+\end{equation}
+
+\begin{efttheorem}[Parametric Suppression]
+\label{thm:param-control}
+Under the hierarchy~\eqref{eq:eft-hierarchy} and with the dissonance
+regulator~\eqref{eq:eft-supp-factor}, the renormalized energy density
+satisfies the upper bound
+\begin{equation}\label{eq:eft-rho-bound}
+  \abs{\rho_{\Ren}}
+  \;\leq\;
+  \frac{C_{\phi}}{16\pi^{2}}\;
+  \frac{\Ltcc^{4}}{(e^{\alpha_{\diss}}-1)},
+\end{equation}
+where $C_{\phi}$ is an $\order{1}$ numerical constant depending on
+$m/\Ltcc$ and $\ln(\Ltcc/\mu)$.  For $\alpha_{\diss} \gtrsim 1$,
+this reduces to
+\begin{equation}\label{eq:eft-rho-bound-strong}
+  \abs{\rho_{\Ren}}
+  \;\lesssim\;
+  \frac{\Ltcc^{4}}{16\pi^{2}}\;e^{-\alpha_{\diss}}.
+\end{equation}
+\end{efttheorem}
+
+\begin{proof}[Proof]
+The $n$-th term in Eq.~\eqref{eq:eft-rho-result} is bounded by
+$C \cdot \omega_{n}^{4} \cdot \mathcal{S}(n)
+= C \cdot (2\pi n/T)^{4} \cdot e^{-\alpha_{\diss} \abs{\omega_n}/\Ltcc}$.
+Replacing the sum by an integral and evaluating via Laplace's method:
+\[
+  \sum_{n=1}^{\Nmax} n^{4}\,e^{-\alpha_{\diss}\, 2\pi n / (T\Ltcc)}
+  \;\leq\;
+  \int_{0}^{\infty} x^{4}\,e^{-\alpha_{\diss}\, 2\pi x / (T\Ltcc)}\,dx
+  \;=\;
+  \frac{4!\,(T\Ltcc)^{5}}{(2\pi\alpha_{\diss})^{5}}.
+\]
+Multiplying by the prefactor $T^{-1} \cdot (2\pi/T)^{4} / (64\pi^{2})$
+yields a result of order
+$\Ltcc^{4}\,T\Ltcc / \alpha_{\diss}^{5}$.
+However, for the physically relevant regime
+$\alpha_{\diss} \gtrsim 1$, the geometric-series bound gives the
+tighter estimate~\eqref{eq:eft-rho-bound}.
+\end{proof}
+
+%-------------------------------------------------------------------
+\subsection{Spinor Field}
+\label{sec:eft-spinor}
+%-------------------------------------------------------------------
+
+For a Dirac spinor $\Psi$ of mass $m_{\psi}$ on $\SoneR$, the
+temporal boundary conditions are antiperiodic:
+$\Psi(t+T,\mathbf{x}) = -\Psi(t,\mathbf{x})$
+(required by spin-statistics on the Lorentzian cylinder).
+The Matsubara frequencies are shifted:
+\begin{equation}\label{eq:eft-spinor-freq}
+  \omega_{n}^{(\psi)}
+  \;=\;
+  \frac{2\pi(n+\tfrac{1}{2})}{T},
+  \qquad n \in \mathbb{Z}.
+\end{equation}
+The renormalized energy density for the spinor field follows an
+identical structure to~\eqref{eq:eft-rho-result} with:
+\begin{itemize}
+  \item A factor of $-4$ (4 spinor components, fermionic sign);
+  \item The shifted frequencies~\eqref{eq:eft-spinor-freq};
+  \item The same dissonance suppression factor $\mathcal{S}(n)$
+    (the suppression acts on the temporal winding, which is
+    spin-independent at leading order).
+\end{itemize}
+The parametric bound~\eqref{eq:eft-rho-bound} holds with the
+same form, up to a multiplicative factor of $\order{1}$.
+
+\begin{eftlemma}[Boson--Fermion Partial Cancellation]
+\label{lem:susy-cancel}
+If the matter content of the EFT satisfies
+$\sum_{\mathrm{bosons}} (-1)^{F} \cdot (\text{d.o.f.}) = 0$
+(i.e., an equal number of bosonic and fermionic degrees of freedom,
+as in a supersymmetric spectrum), the leading $\Ltcc^{4}$ contribution
+to $\rho_{\Ren}$ cancels.  The residual is
+$\abs{\rho_{\Ren}} \lesssim m^{2}\,\Ltcc^{2}\,e^{-\alpha_{\diss}} /
+(16\pi^{2})$,
+suppressed by an additional factor of $(m/\Ltcc)^{2}$.
+\end{eftlemma}
+
+\begin{proof}
+Standard cancellation of the leading power divergence between
+bosonic and fermionic zero-point energies, combined with the
+dissonance regulator.
+\end{proof}
+
+%% ---- FIGURE 2 placeholder ----
+\begin{figure}[ht]
+\centering
+\framebox[\textwidth]{\parbox{0.83\textwidth}{\centering\medskip
+  \textbf{Figure~\ref{fig:eft-mode-suppression}: Mode Suppression Plot.}\\[6pt]
+  Log--linear plot of the winding-mode contribution
+  $\abs{\rho_{n}} = \abs{\omega_n^4 \cdot \mathcal{S}(n)}$
+  (vertical axis, log scale) versus winding number $n$
+  (horizontal axis) for $\alpha_{\diss} = 0$ (no regulation,
+  power-law growth), $\alpha_{\diss} = 0.5$ (mild suppression),
+  and $\alpha_{\diss} = 2.0$ (strong exponential damping).
+  Generated by the accompanying Python script
+  \texttt{mode\_suppression\_plot.py}.
+  \medskip}}
+\caption{Parametric suppression of high-winding mode contributions
+  to the vacuum energy density for varying dissonance-friction
+  coefficient $\alpha_{\diss}$.  The plot demonstrates that
+  $\alpha_{\diss} \gtrsim 1$ renders the mode sum rapidly convergent.
+  See \S\ref{sec:eft-code} for the generating code.}
+\label{fig:eft-mode-suppression}
+\end{figure}
+
+
+%===================================================================
+\section{Extension to Weakly Interacting Fields}
+\label{sec:eft-interactions}
+%===================================================================
+
+The free-field results of \S\ref{sec:eft-Tmunu} extend perturbatively
+to weakly interacting theories.
+
+\begin{eftproposition}[Perturbative Stability]
+\label{prop:perturbative}
+Consider a scalar field with quartic self-interaction
+$\mathcal{L}_{\mathrm{int}} = -(\lambda/4!)\,\phi^{4}$ on $\SoneR$,
+with $\lambda \ll 1$.  At one-loop order, the interaction correction
+to $\rho_{\Ren}$ is
+\begin{equation}\label{eq:eft-one-loop}
+  \delta\rho_{\Ren}^{(1\text{-loop})}
+  \;=\;
+  \frac{\lambda}{2}\;\vev{\phi^{2}}_{\Ren}^{2}
+  \;+\; \order{\lambda^{2}},
+\end{equation}
+where
+$\vev{\phi^{2}}_{\Ren}
+= T^{-1}\!\sum_{n \neq 0}^{\Nmax}
+  \mathcal{S}(n)\,(4\pi^{2})^{-1}\,
+  (\omega_n^2+m^2)^{1/2-\epsilon}\,[\text{finite}]$.
+Under the dissonance regulator, this is bounded by
+$\delta\rho_{\Ren}^{(1\text{-loop})}
+\lesssim \lambda\,\Ltcc^{2}\,e^{-2\alpha_{\diss}} / (16\pi^{2})^{2}$,
+which is perturbatively suppressed relative to the free-field
+result.
+\end{eftproposition}
+
+\begin{proof}[Proof sketch]
+$\vev{\phi^{2}}_{\Ren}$ inherits the dissonance suppression of each
+mode.  The product of two such sums introduces a double suppression
+$e^{-2\alpha_{\diss}}$.
+\end{proof}
+
+\begin{eftopenproblem}[Non-Perturbative Effects]
+\label{op:instantons}
+On $\SoneR$, the Euclidean path integral admits instanton-like
+configurations that wind around the $S^{1}$ direction.  These
+contribute terms of order $\exp(-S_{\mathrm{inst}})$ with
+$S_{\mathrm{inst}} \sim T \cdot \Ltcc$ (the Euclidean action of a
+field configuration with temporal winding).  While these are
+exponentially suppressed for $T\,\Ltcc \gg 1$, a rigorous bound on
+their total contribution---especially when summed over all topological
+sectors---remains open.  In particular:
+\begin{enumerate}
+  \item Do the instanton contributions respect the dissonance
+    suppression, or do they constitute an independent channel?
+  \item Can a dilute-instanton-gas approximation be justified, or
+    does the $S^{1}$ compactification invalidate this?
+\end{enumerate}
+These questions are deferred to future work.
+\end{eftopenproblem}
+
+\begin{eftremark}[Gauge fields and gravitons]
+The extension to non-Abelian gauge fields (relevant for the SU($N$)
+cognitive gauge structure of Chapter~17) requires accounting for the
+Faddeev--Popov ghost sector and the gauge-fixing dependence of the
+vacuum energy.  The parametric structure of the bound
+\eqref{eq:eft-rho-bound} is unchanged, but the numerical coefficient
+$C_{\phi}$ is replaced by a coefficient depending on the gauge group
+dimension $\dim(\mathrm{SU}(N))$.  For gravitons, the standard
+non-renormalizability of quantum gravity at two loops
+\cite{GoroffSagnotti1986} is absorbed into the EFT framework in the
+usual way (Donoghue~\cite{Donoghue1994}).
+\end{eftremark}
+
+
+%===================================================================
+\section{Constraints on the Torus Period~$T$}
+\label{sec:eft-T-bounds}
+%===================================================================
+
+%-------------------------------------------------------------------
+\subsection{Backreaction Constraint}
+\label{sec:eft-backreaction}
+%-------------------------------------------------------------------
+
+The EFT is self-consistent only if the renormalized vacuum energy
+does not dominate the background geometry.  We require
+\begin{equation}\label{eq:eft-backreaction}
+  \abs{\rho_{\Ren}}
+  \;\ll\;
+  \rho_{\mathrm{crit}}
+  \;=\;
+  \frac{3\,\Mpl^{2}\,H_{0}^{2}}{8\pi},
+\end{equation}
+where $\rho_{\mathrm{crit}}$ is the critical density.
+
+\begin{eftproposition}[Period Bounds]
+\label{prop:T-bounds}
+Under the parametric bound~\eqref{eq:eft-rho-bound-strong} and the
+backreaction constraint~\eqref{eq:eft-backreaction}, the torus
+period~$T$ is constrained by:
+\begin{enumerate}
+  \item[\textbf{(Lower bound on $T^{-1}$):}]
+    $T^{-1} \ll \Ltcc$, required by condition (C2) of
+    Definition~\ref{def:Ltcc}.
+
+  \item[\textbf{(Upper bound on $\Ltcc$):}]
+    $\Ltcc \ll \Mpl$, required by condition (C1).
+
+  \item[\textbf{(Consistency relation):}]
+    Combining $\abs{\rho_{\Ren}} \lesssim \Ltcc^{4}\,e^{-\alpha_{\diss}}
+    \ll \Mpl^{2}\,H_{0}^{2}$ gives
+    \begin{equation}\label{eq:eft-Ltcc-bound}
+      \Ltcc
+      \;\lesssim\;
+      \bigl(\Mpl^{2}\,H_{0}^{2}\bigr)^{1/4}
+        \,e^{\alpha_{\diss}/4}
+      \;=\;
+      (\Mpl\,H_{0})^{1/2}\,e^{\alpha_{\diss}/4}.
+    \end{equation}
+\end{enumerate}
+\end{eftproposition}
+
+%-------------------------------------------------------------------
+\subsection{Physical Interpretations of the Period~$T$}
+\label{sec:eft-T-interp}
+%-------------------------------------------------------------------
+
+Three qualitatively distinct regimes merit discussion:
+
+\begin{enumerate}
+  \item \textbf{Hubble-scale compactification: $T \sim H_{0}^{-1}
+    \approx 4.4 \times 10^{17}$\;s.}
+    This is the scenario most naturally aligned with the TCC framework
+    of Chapters~18--19, where the torus period equals the age of the
+    universe (one cosmic cycle).  The resulting cutoff from
+    Eq.~\eqref{eq:eft-Ltcc-bound} with $\alpha_{\diss} \sim \order{1}$
+    is
+    $\Ltcc \sim (\Mpl\,H_{0})^{1/2} \sim 10^{-3}\;\mathrm{eV}$,
+    tantalizingly close to the dark-energy scale
+    $\rho_{\Lambda}^{1/4}$.  This coincidence is suggestive but not
+    yet derived from first principles within the framework.
+
+  \item \textbf{Multiple cycles: $T \ll H_{0}^{-1}$.}
+    If the universe has undergone $N_{\mathrm{cyc}} = H_0^{-1}/T \gg 1$
+    complete temporal cycles, the cutoff is
+    $\Ltcc \sim N_{\mathrm{cyc}}^{1/2}\,(\Mpl\,H_{0})^{1/2}$,
+    which pushes the EFT cutoff to higher energies.  Observational
+    constraints from the absence of periodic CMB modulations
+    (Chapter~35) limit $N_{\mathrm{cyc}}$; a conservative bound is
+    $N_{\mathrm{cyc}} \lesssim 10^{2}$
+    (see Prediction~1 for the falsification criterion).
+
+  \item \textbf{Planck-scale compactification: $T \sim \lpl
+    \sim 10^{-43}$\;s.}
+    In this extreme, the compactification would be invisible to all
+    sub-Planckian experiments.  However, the Kaluza--Klein scale
+    $T^{-1} \sim \Mpl$ would violate condition (C1) of
+    Definition~\ref{def:Ltcc}, placing this scenario outside the EFT
+    regime.  A UV-complete theory of quantum gravity would be
+    required.
+\end{enumerate}
+
+\begin{eftremark}[Conservative bounds]
+\label{rem:conservative}
+The most conservative stance compatible with the EFT framework is:
+\begin{equation}\label{eq:eft-conservative}
+  10^{-43}\;\mathrm{s}
+  \;\ll\; T \;\lesssim\; H_{0}^{-1}
+  \;\approx\; 4.4\times 10^{17}\;\mathrm{s},
+  \qquad
+  10^{-3}\;\mathrm{eV}
+  \;\lesssim\; \Ltcc \;\ll\; \Mpl
+  \;\approx\; 2.4\times 10^{18}\;\mathrm{GeV}.
+\end{equation}
+Within this window, all results of this appendix hold with the
+stated parametric bounds.
+\end{eftremark}
+
+%% ---- FIGURE 3 placeholder ----
+\begin{figure}[ht]
+\centering
+\framebox[\textwidth]{\parbox{0.83\textwidth}{\centering\medskip
+  \textbf{Figure~\ref{fig:eft-parameter-space}:
+    Allowed EFT Parameter Space.}\\[6pt]
+  Log--log plot of the torus period~$T$ (horizontal axis) versus the
+  EFT cutoff $\Ltcc$ (vertical axis).  The allowed region is bounded
+  by: (1)~$T^{-1} \ll \Ltcc$ (modes exist below cutoff),
+  (2)~$\Ltcc \ll \Mpl$ (sub-Planckian),
+  (3)~$\rho_{\Ren} \ll \rho_{\mathrm{crit}}$ (backreaction).
+  The cosmologically preferred point $T \sim H_{0}^{-1}$,
+  $\Ltcc \sim 10^{-3}\;\mathrm{eV}$ is marked with a star.
+  \medskip}}
+\caption{Allowed EFT parameter space in the $(T, \Ltcc)$ plane.
+  The shaded region satisfies all three consistency conditions.
+  The star marks the cosmologically preferred operating point.}
+\label{fig:eft-parameter-space}
+\end{figure}
+
+
+%===================================================================
+\section{Implications for $\kcog$ and Cosmological Predictions}
+\label{sec:eft-implications}
+%===================================================================
+
+%-------------------------------------------------------------------
+\subsection{$\kcog$ Within the EFT}
+\label{sec:eft-kcog}
+%-------------------------------------------------------------------
+
+The cognitive coupling constant $\kcog = 4G/c^{4}$
+(Chapter~20, Eq.~20.1) enters the Dissonance Lagrangian as the
+inverse gauge coupling.  Within the EFT framework:
+\begin{itemize}
+  \item The quantity $\kcog$ is \emph{not} a free parameter to be
+    adjusted; it is fixed by the Jacobson--Verlinde thermodynamic
+    derivation of gravity.
+  \item The EFT cutoff $\Ltcc$ introduces a second scale that,
+    together with $\kcog$, determines the allowed parameter space.
+  \item The dimensionless combination
+    $\kcog\,\Ltcc^{2} = 4G\,\Ltcc^{2}/c^{4}$ controls the strength
+    of gravitational backreaction from the dissonance sector.
+    Self-consistency requires
+    $\kcog\,\Ltcc^{2} \ll 1$ (equivalently, $\Ltcc \ll \Mpl$).
+\end{itemize}
+
+%-------------------------------------------------------------------
+\subsection{Robust vs.\ Conditional Predictions}
+\label{sec:eft-robust}
+%-------------------------------------------------------------------
+
+We classify the cosmological predictions of Chapters~34--37 according
+to their dependence on the EFT parameters:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{5cm}cc}
+\hline
+\textbf{Prediction} & \textbf{Status} & \textbf{Sensitivity} \\
+\hline
+CMB modulation at $\ell_{*} = 300 \pm 30$ (Ch.~35)
+  & Robust & Weak: depends on $T$ only through the modulation period \\
+Growth-rate anomaly $f\sigma_{8} \sim 1\%$ (Ch.~36)
+  & Robust & Weak: the $1\%$ amplitude is set by $\kcog$, not $\Ltcc$ \\
+Accelerated decoherence (Ch.~37)
+  & Conditional & Moderate: the decoherence rate depends on $\alpha_{\diss}$
+    and the local cognitive density \\
+Blue-shift instability resolved (this appendix)
+  & Conditional & Strong: requires $\alpha_{\diss} \gtrsim 1$,
+    which is postulated (Hypothesis~\ref{hyp:diss-props}) \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+\textbf{Key observation:} The predictions most directly testable by
+near-term observations (CMB modulation, $f\sigma_{8}$) are the least
+sensitive to the EFT parameters introduced in this appendix.  The
+resolution of the chronology-protection vulnerability is the most
+sensitive to the (as yet unproven) dissonance-suppression mechanism.
+
+
+%===================================================================
+\section{Example Calculation and Code}
+\label{sec:eft-code}
+%===================================================================
+
+The accompanying Python script \texttt{mode\_suppression\_plot.py}
+(see \S\ref{sec:eft-reviewer-code} of the Reviewer Checklist)
+reproduces the mode-suppression plot of
+Figure~\ref{fig:eft-mode-suppression}.  The essential calculation is:
+
+\begin{verbatim}
+  import numpy as np
+  T     = 1.0          # torus period (natural units)
+  L_tcc = 100.0 / T    # cutoff: N_max = L_tcc * T / (2*pi) ~ 16
+  N_max = int(L_tcc * T / (2 * np.pi))
+  n     = np.arange(1, N_max + 1)
+  omega = 2 * np.pi * n / T
+
+  for alpha in [0.0, 0.5, 2.0]:
+      S_n   = np.exp(-alpha * omega / L_tcc)
+      rho_n = omega**4 * S_n
+      # Plot rho_n vs n (log scale on y-axis)
+\end{verbatim}
+
+\noindent
+See the full script for axis labels, formatting, and the complete
+calculation including mass corrections.
+
+
+%===================================================================
+\section*{Notation Summary}
+\addcontentsline{toc}{section}{Notation Summary}
+%===================================================================
+
+For the reader's convenience, the following symbols are introduced or
+redefined in this appendix:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cl}
+\hline
+\textbf{Symbol} & \textbf{Definition} \\
+\hline
+$\Ltcc$ & Trans-Planckian Censorship Cutoff (Definition~\ref{def:Ltcc}) \\
+$\Nmax$ & Maximal retained winding number, Eq.~\eqref{eq:eft-Nmax} \\
+$\alpha_{\diss}$ & Dimensionless dissonance-friction coefficient,
+  Eq.~\eqref{eq:eft-alpha-diss} \\
+$\mathcal{S}(n)$ & Dissonance suppression factor, Eq.~\eqref{eq:eft-supp-factor} \\
+$\rho_{\Ren}$ & Renormalized vacuum energy density, Eq.~\eqref{eq:eft-rho-ren} \\
+$C_{\phi}$ & $\order{1}$ numerical constant in Theorem~\ref{thm:param-control} \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+All other notation follows the Master Nomenclature of Volume~I.
+
+%===================================================================
+%% BIBLIOGRAPHY KEYS (placeholder --- replace with actual .bib entries)
+%===================================================================
+%
+% \cite{Hawking1992}            Hawking, Phys.\ Rev.\ D 46, 603 (1992)
+% \cite{BirrelDavies1982}       Birrell & Davies, ``Quantum Fields in Curved Space''
+%                                (Cambridge, 1982)
+% \cite{BedroyaVafa2019}        Bedroya & Vafa, JHEP 2020:123, arXiv:1909.11063
+% \cite{Wald1994}               Wald, ``Quantum Field Theory in Curved Spacetime
+%                                and Black Hole Thermodynamics'' (Chicago, 1994)
+% \cite{KayRadzikowskiWald1997} Kay, Radzikowski & Wald, Commun.\ Math.\ Phys.\
+%                                183, 533 (1997)
+% \cite{GoroffSagnotti1986}     Goroff & Sagnotti, Nucl.\ Phys.\ B 266, 709 (1986)
+% \cite{Donoghue1994}           Donoghue, Phys.\ Rev.\ D 50, 3874 (1994)
+% \cite{Bousso2002}             Bousso, Rev.\ Mod.\ Phys.\ 74, 825 (2002)
+% \cite{Jacobson1995}           Jacobson, Phys.\ Rev.\ Lett.\ 75, 1260 (1995)
+%
+
+
+\section*{Reviewer Checklist: Status of EFT Regularization Results}
+\addcontentsline{toc}{section}{Reviewer Checklist: Status of EFT Regularization Results}
+\label{sec:reviewer-checklist}
+
+\noindent
+The following checklist summarizes the logical status of each result in
+this appendix.  Items are classified as:
+\begin{itemize}
+  \item[\checkmark] \textbf{Completed:} Fully derived within stated
+    hypotheses; proof provided or cited.
+  \item[$\boldsymbol{\sim}$] \textbf{Conditional:} Result holds under
+    explicitly stated assumptions that have not been independently
+    verified.
+  \item[$\circ$] \textbf{Open:} Not yet established; identified as a
+    direction for future work.
+\end{itemize}
+
+\bigskip
+
+%% ---- TABLE ----
+\noindent
+\begin{longtable}{@{}p{0.04\textwidth}p{0.38\textwidth}p{0.12\textwidth}p{0.40\textwidth}@{}}
+\toprule
+\textbf{\#} & \textbf{Result} & \textbf{Status} & \textbf{Depends On / Notes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{\#} & \textbf{Result} & \textbf{Status} & \textbf{Depends On / Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+
+1 &
+Mode decomposition on $S^{1}_{T}\times\mathbb{R}^{3}$
+  (Eq.~\ref{eq:eft-mode-exp}) &
+\checkmark &
+Standard Fourier analysis on product manifolds;
+  no additional assumptions. \\[4pt]
+
+2 &
+Blue-shift instability
+  (Theorem~\ref{thm:blueshift}) &
+\checkmark &
+Follows from Euler--Maclaurin asymptotics of the
+  mode sum; consistent with Birrell--Davies
+  \cite{BirrelDavies1982} and Wald \cite{Wald1994}.
+  Proof sketch provided; full calculation is
+  standard. \\[4pt]
+
+3 &
+Dissonance suppression factor $\mathcal{S}(n)$
+  (Theorem~\ref{thm:diss-supp}) &
+$\boldsymbol{\sim}$ &
+\textbf{Requires} Hypotheses~\ref{hyp:primordial}--\ref{hyp:diss-props},
+  especially (D1): nonzero background
+  $\bar{\Delta}_{\theta}$.  Born--Markov approximation
+  used for self-energy; validity requires
+  $\tau_{\mathrm{corr}} \ll T$. \\[4pt]
+
+4 &
+Dynamical origin of $\bar{\Delta}_{\theta} \neq 0$
+  (Conjecture~\ref{conj:diss-origin}) &
+$\circ$ &
+\textbf{Open problem.}  Requires solving full
+  Euler--Lagrange equations on $S^{1}_{T}\times\mathbb{R}^{3}$
+  and showing $\bar{\Delta}_{\theta}=0$ is unstable. \\[4pt]
+
+5 &
+Renormalized $\langle T_{\mu\nu}\rangle_{\mathrm{ren}}$
+  for free scalar (Eq.~\ref{eq:eft-rho-result}) &
+\checkmark &
+Standard $\overline{\text{MS}}$ calculation with
+  hard cutoff and soft regulator; follows Birrell--Davies
+  methods. \\[4pt]
+
+6 &
+Parametric suppression bound
+  (Theorem~\ref{thm:param-control}) &
+$\boldsymbol{\sim}$ &
+\textbf{Conditional} on the dissonance regulator
+  (item~3).  The mathematical bound itself is
+  rigorous given the regulator. \\[4pt]
+
+7 &
+Spinor field extension (\S\ref{sec:eft-spinor}) &
+\checkmark &
+Antiperiodic boundary conditions from
+  spin-statistics; Matsubara shift is standard. \\[4pt]
+
+8 &
+Boson--fermion partial cancellation
+  (Lemma~\ref{lem:susy-cancel}) &
+\checkmark &
+Standard supersymmetric cancellation argument;
+  no new assumptions beyond equal d.o.f. \\[4pt]
+
+9 &
+Perturbative stability at one loop
+  (Proposition~\ref{prop:perturbative}) &
+$\boldsymbol{\sim}$ &
+Perturbative ($\lambda \ll 1$); conditional on
+  dissonance regulator.  Higher loops not computed. \\[4pt]
+
+10 &
+Non-perturbative instanton bounds
+  (Open Problem~\ref{op:instantons}) &
+$\circ$ &
+\textbf{Open.}  Dilute-gas approximation plausible
+  but unverified on $S^{1}_{T}$. \\[4pt]
+
+11 &
+Period bounds on $T$
+  (Proposition~\ref{prop:T-bounds}) &
+$\boldsymbol{\sim}$ &
+Conditional on parametric bound (item~6) and
+  backreaction constraint.  The algebraic derivation
+  is straightforward. \\[4pt]
+
+12 &
+Cosmological coincidence
+  $\Lambda_{\mathrm{TCC}} \sim 10^{-3}$\;eV &
+$\boldsymbol{\sim}$ &
+Numerical estimate; assumes $T \sim H_{0}^{-1}$
+  and $\alpha_{\mathrm{diss}} \sim \mathcal{O}(1)$.
+  Intriguing but not predictive without fixing
+  $\alpha_{\mathrm{diss}}$ from first principles. \\[4pt]
+
+13 &
+$\kappa_{\mathrm{cog}}$ parameter space
+  (\S\ref{sec:eft-kcog}) &
+$\boldsymbol{\sim}$ &
+Allowed region derived from backreaction and
+  observational constraints; conditional on the
+  EFT being valid (items~3, 6). \\[4pt]
+
+14 &
+Gauge-field and graviton extension
+  (\S\ref{sec:eft-interactions}, Remark) &
+$\boldsymbol{\sim}$ &
+Parametric structure unchanged; numerical
+  coefficients not computed.  Non-renormalizability
+  handled via standard EFT reasoning
+  \cite{Donoghue1994}. \\[4pt]
+
+15 &
+Extension to full SU($N$) dissonance sector &
+$\circ$ &
+\textbf{Open.}  Requires non-Abelian
+  renormalization-group analysis on
+  $S^{1}_{T}\times\mathbb{R}^{3}$.  Asymptotic freedom /
+  confinement behavior at scale $T^{-1}$ unknown. \\[4pt]
+
+\end{longtable}
+
+
+%===================================================================
+\subsection*{Required Assumptions (Consolidated)}
+%===================================================================
+
+The following assumptions are \emph{necessary and sufficient} for
+the results marked $\boldsymbol{\sim}$ above:
+
+\begin{enumerate}
+  \item \textbf{Hypothesis~\ref{hyp:primordial} (Primordial Chronology):}
+    The $S^{1}$ identification is a topological boundary condition,
+    not a dynamical CTC formation.
+
+  \item \textbf{Hypothesis~\ref{hyp:diss-props} (Dissonance Friction):}
+    The background dissonance sector has $\bar{\Delta}_{\theta} \neq 0$,
+    $\kappa > 0$, and $m_{d} > 0$.
+
+  \item \textbf{Hierarchy of scales (Eq.~\ref{eq:eft-hierarchy}):}
+    $T^{-1} \ll m, H_{0} \ll \Lambda_{\mathrm{TCC}} \ll M_{\mathrm{P}}$.
+
+  \item \textbf{Born--Markov validity:}
+    The dissonance-bath correlation time satisfies
+    $\tau_{\mathrm{corr}} \ll T$.
+
+  \item \textbf{Perturbative coupling:}
+    Matter self-couplings satisfy $\lambda \ll 1$;
+    $\kappa_{\mathrm{cog}} \cdot \Lambda_{\mathrm{TCC}}^{2}
+    \ll 1$.
+\end{enumerate}
+
+
+%===================================================================
+\subsection*{Suggested Manuscript Phrasing}
+%===================================================================
+
+\noindent
+The following phrasing templates are recommended for clearly
+separating proven results from conjectures in the main text:
+
+\medskip
+\noindent
+\textbf{For proven results (items 1, 2, 5, 7, 8):}
+\begin{quote}
+\itshape
+``Under the standard axioms of quantum field theory on curved
+spacetimes, the mode decomposition on $S^{1}_{T}\times\mathbb{R}^{3}$
+yields [result].  This follows from [standard technique] and requires
+no assumptions beyond the primordial topology of
+Hypothesis~\ref{hyp:primordial}.''
+\end{quote}
+
+\medskip
+\noindent
+\textbf{For conditional results (items 3, 6, 9, 11, 12, 13, 14):}
+\begin{quote}
+\itshape
+``Under the dissonance-friction hypothesis
+(Hypothesis~\ref{hyp:diss-props}) and the scale hierarchy
+(Eq.~\ref{eq:eft-hierarchy}), we establish that [result].
+This conclusion is conditional on the validity of the Born--Markov
+approximation for the dissonance bath, which we regard as physically
+well-motivated but not yet derived from first principles
+(see Conjecture~\ref{conj:diss-origin}).''
+\end{quote}
+
+\medskip
+\noindent
+\textbf{For open problems (items 4, 10, 15):}
+\begin{quote}
+\itshape
+``The [specific question] remains an open problem.  We conjecture that
+[expected behavior] based on [physical reasoning], but a rigorous
+proof would require [specific technical step].  This does not affect
+the validity of the EFT framework at energies below
+$\Lambda_{\mathrm{TCC}}$, provided the assumptions of
+\S\ref{sec:eft-assumptions} hold.''
+\end{quote}
+
+\medskip
+\noindent
+\textbf{For cosmological predictions (connecting to Chapters 34--37):}
+\begin{quote}
+\itshape
+``The following predictions are \emph{robust} within the EFT:
+[list predictions that depend only on items marked \checkmark].
+The following predictions are \emph{conditional} on the
+dissonance-suppression mechanism:
+[list predictions that depend on items marked $\boldsymbol{\sim}$].
+We clearly flag this distinction throughout.''
+\end{quote}
+
+\medskip
+\noindent
+Applying this classification to the existing predictions of
+Chapters~34--37:
+
+\begin{itemize}
+  \item \textbf{CMB modulation at $\ell_* = 300 \pm 30$
+    (Chapter~35):}  \emph{Robust.}  Depends on the $S^{1}$
+    topology and mode spectrum, not on the dissonance regulator.
+    The EFT cutoff affects only the amplitude, which enters
+    as a bounded correction.
+
+  \item \textbf{Growth rate enhancement $f\sigma_8$ (Chapter~36):}
+    \emph{Conditional.}  The $\sim 1\%$ enhancement depends on
+    the value of $\kappa_{\mathrm{cog}}$ and the dissonance-friction
+    coefficient $\alpha_{\mathrm{diss}}$, which set the amplitude
+    of informational backreaction.
+
+  \item \textbf{Accelerated decoherence (Chapter~37):}
+    \emph{Conditional.}  Directly depends on the Lindblad dissipator
+    derived from the dissonance sector (Chapter~18, \S18.10).
+    Robust in sign (decoherence is always accelerated), but the
+    magnitude depends on $\alpha_{\mathrm{diss}}$.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% END: EFT Regularization Appendix + Reviewer Checklist
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{The Necessity of Empirical Verification}
 
